@@ -70,7 +70,7 @@ describe('TaskBrokerWsServer', () => {
 			);
 
 			const ws = mock<WebSocket>();
-			ws.isAlive = false;
+			(ws as any).isAlive = false;
 			server.runnerConnections.set('test-runner', ws);
 
 			server.start();

@@ -49,16 +49,17 @@
     "vue-router": "catalog:frontend"
   },
   "dependencies": {
-    "@n8n/extension-sdk": "workspace:*"
+    "@n8n/extension-sdk": "workspace:*",
+    "vite-plugin-dts": "catalog:"
   },
   "devDependencies": {
-    "run-script-os": "catalog:",
     "@n8n/stylelint-config": "workspace:*",
     "@n8n/typescript-config": "workspace:*",
     "@vitejs/plugin-vue": "catalog:frontend",
     "@vue/tsconfig": "catalog:frontend",
-    "tsdown": "catalog:",
     "rimraf": "catalog:",
+    "run-script-os": "catalog:",
+    "tsdown": "catalog:",
     "vite": "catalog:",
     "vue": "catalog:frontend",
     "vue-router": "catalog:frontend",

@@ -66,9 +66,13 @@ export class LoadNodesAndCredentials {
 		const delimiter = process.platform === 'win32' ? ';' : ':';
 		process.env.NODE_PATH = module.paths.join(delimiter);
 
-		// @ts-ignore
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		module.constructor._initPaths();
+		try {
+			// @ts-ignore
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			module.constructor._initPaths();
+		} catch (e) {
+			console.warn("Failed to set module paths. If you're using Bun, you can ignore this warning.");
+		}
 
 		if (!inE2ETests) {
 			this.excludeNodes = this.excludeNodes ?? [];

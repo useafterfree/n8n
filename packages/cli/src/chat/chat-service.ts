@@ -87,7 +87,7 @@ export class ChatService {
 			return;
 		}
 
-		ws.isAlive = true;
+		(ws as any).isAlive = true;
 
 		const key = `${sessionId}|${executionId}|${isPublic ? 'public' : 'integrated'}`;
 

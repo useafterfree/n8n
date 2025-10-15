@@ -2,29 +2,29 @@ import type { Completion, CompletionContext, CompletionSource } from '@codemirro
 import { completeFromList, ifNotIn } from '@codemirror/autocomplete';
 import { syntaxTree } from '@codemirror/language';
 import type { EditorState, Text } from '@codemirror/state';
-import type { SyntaxNode } from '@lezer/common';
 
 import { Type, Keyword } from './grammar.sql.terms';
 
 const skippedTokens = ['Whitespace'];
 
-function tokenBefore(tree: SyntaxNode) {
+// function tokenBefore(tree: SyntaxNode) {
+function tokenBefore(tree: any) {
 	const cursor = tree.cursor().moveTo(tree.from, -1);
 	while (/Comment/.test(cursor.name)) cursor.moveTo(cursor.from, -1);
 	return cursor.node;
 }
-
-function idName(doc: Text, node: SyntaxNode): string {
+// function idName(doc: Text, node: SyntaxNode): string {
+function idName(doc: Text, node: any): string {
 	const text = doc.sliceString(node.from, node.to);
 	const quoted = /^([`'"])(.*)\1$/.exec(text);
 	return quoted ? quoted[2] : text;
 }
-
-function plainID(node: SyntaxNode | null) {
+// function plainID(node: SyntaxNode | null) {
+function plainID(node: any | null) {
 	return node && (node.name === 'Identifier' || node.name === 'QuotedIdentifier');
 }
-
-function pathFor(doc: Text, id: SyntaxNode) {
+// function pathFor(doc: Text, id: SyntaxNode) {
+function pathFor(doc: Text, id: any) {
 	if (id.name === 'CompositeIdentifier') {
 		const path: string[] = [];
 		for (let ch = id.firstChild; ch; ch = ch.nextSibling)
@@ -33,8 +33,8 @@ function pathFor(doc: Text, id: SyntaxNode) {
 	}
 	return [idName(doc, id)];
 }
-
-function parentsFor(doc: Text, node: SyntaxNode | null) {
+// function parentsFor(doc: Text, node: SyntaxNode | null) {
+function parentsFor(doc: Text, node: any | null) {
 	for (let path: string[] = []; ; ) {
 		if (!node || node.name !== '.') return path;
 		const name = tokenBefore(node);
@@ -43,7 +43,6 @@ function parentsFor(doc: Text, node: SyntaxNode | null) {
 		node = tokenBefore(name);
 	}
 }
-
 function sourceContext(state: EditorState, startPos: number) {
 	const pos = syntaxTree(state).resolveInner(startPos, -1);
 	const aliases = getAliases(state.doc, pos);
@@ -67,15 +66,15 @@ const EndFrom = new Set(
 	'where group having order union intersect except all distinct limit offset fetch for'.split(' '),
 );
 
-function getAliases(doc: Text, at: SyntaxNode) {
-	let statement;
-	for (let parent: SyntaxNode | null = at; !statement; parent = parent.parent) {
+function getAliases(doc: Text, at: any) {
+	let statement: any;
+	for (let parent: any = at; !statement; parent = parent.parent) {
 		if (!parent) return null;
 		if (parent.name === 'Statement') statement = parent;
 	}
 	let aliases: { [name: string]: string[] } | null = null;
 	for (
-		let scan = statement.firstChild, sawFrom = false, prevID: SyntaxNode | null = null;
+		let scan: any = statement.firstChild, sawFrom = false, prevID: any = null;
 		scan;
 		scan = scan.nextSibling
 	) {
