@@ -42,6 +42,7 @@
     "@codemirror/state": "^6.0.0",
     "@lezer/highlight": "^1.0.0",
     "@lezer/lr": "^1.0.0",
+    "@lezer/common": "1.1.0",
     "@n8n/codemirror-lang": "workspace:*"
   },
   "devDependencies": {
